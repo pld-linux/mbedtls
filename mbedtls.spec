@@ -1,12 +1,12 @@
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		mbedtls
-Version:	1.3.10
-Release:	2
+Version:	1.3.11
+Release:	1
 License:	GPL v2+
 Group:		Libraries
 Source0:	https://tls.mbed.org/code/releases/%{name}-%{version}-gpl.tgz
-# Source0-md5:	19ebbc96feceb430ad958dfe89cb633f
+# Source0-md5:	c02ce2e54862d678604794ee484fb59e
 Patch0:		%{name}-x32.patch
 URL:		https://tls.mbed.org/
 BuildRequires:	cmake >= 2.6
@@ -92,7 +92,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog README.rst
 %attr(755,root,root) %{_libdir}/libmbedtls.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.8
+%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.9
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/aescrypt2
 %attr(755,root,root) %{_libdir}/%{name}/benchmark
@@ -112,6 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/hello
 %attr(755,root,root) %{_libdir}/%{name}/key_app
 %attr(755,root,root) %{_libdir}/%{name}/md5sum
+%attr(755,root,root) %{_libdir}/%{name}/mini_client
 %attr(755,root,root) %{_libdir}/%{name}/mpi_demo
 %attr(755,root,root) %{_libdir}/%{name}/o_p_test
 %attr(755,root,root) %{_libdir}/%{name}/pem2der
