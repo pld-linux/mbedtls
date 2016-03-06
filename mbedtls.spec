@@ -1,12 +1,12 @@
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		mbedtls
-Version:	2.2.0
+Version:	2.2.1
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 Source0:	https://tls.mbed.org/code/releases/%{name}-%{version}-gpl.tgz
-# Source0-md5:	69165befb762895234c7600cd5cdb789
+# Source0-md5:	b6909d94600fc5f644e9bca52e96fb27
 Patch0:		%{name}-x32.patch
 URL:		https://tls.mbed.org/
 BuildRequires:	cmake >= 2.6
