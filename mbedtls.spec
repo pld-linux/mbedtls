@@ -1,16 +1,21 @@
+#
+# Conditional build:
+%bcond_with	zlib	# zlib compression support (may reduce security, see CRIME)
+#
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		mbedtls
-Version:	2.3.0
+Version:	2.6.0
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 Source0:	https://tls.mbed.org/code/releases/%{name}-%{version}-gpl.tgz
-# Source0-md5:	3f396d21b9c86c0a11ac9ba0b6e6f999
+# Source0-md5:	f03b8cf455f246e70e83662d534e156f
 URL:		https://tls.mbed.org/
 BuildRequires:	cmake >= 2.6
 BuildRequires:	doxygen
 BuildRequires:	rpmbuild(macros) >= 1.605
+%{?with_zlib:BuildRequires:	zlib-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -51,6 +56,17 @@ Static mbedTLS library.
 %description static -l pl.UTF-8
 Statyczna biblioteka mbedTLS.
 
+%package apidocs
+Summary:	API documentation for mbedTLS library
+Summary(pl.UTF-8):	Dokumentacja API biblioteki mbedTLS
+Group:		Documentation
+
+%description apidocs
+API documentation for mbedTLS library.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API biblioteki mbedTLS.
+
 %prep
 %setup -q
 
@@ -59,7 +75,8 @@ install -d build
 cd build
 %cmake .. \
 	-DLIB_INSTALL_DIR:PATH=%{_libdir} \
-	-DUSE_SHARED_MBEDTLS_LIBRARY:BOOL=1
+	%{?with_zlib:-DENABLE_ZLIB_SUPPORT=ON} \
+	-DUSE_SHARED_MBEDTLS_LIBRARY=ON
 
 %{__make}
 %{__make} apidoc
@@ -139,7 +156,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc apidoc/*
 %attr(755,root,root) %{_libdir}/libmbedcrypto.so
 %attr(755,root,root) %{_libdir}/libmbedtls.so
 %attr(755,root,root) %{_libdir}/libmbedx509.so
@@ -150,3 +166,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libmbedcrypto.a
 %{_libdir}/libmbedtls.a
 %{_libdir}/libmbedx509.a
+
+%files apidocs
+%defattr(644,root,root,755)
+%doc apidoc/*
