@@ -5,12 +5,12 @@
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		mbedtls
-Version:	2.6.0
+Version:	2.16.1
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 Source0:	https://tls.mbed.org/code/releases/%{name}-%{version}-gpl.tgz
-# Source0-md5:	f03b8cf455f246e70e83662d534e156f
+# Source0-md5:	f3093bda03ca4ed75088e035f333dae9
 URL:		https://tls.mbed.org/
 BuildRequires:	cmake >= 2.6
 BuildRequires:	doxygen
@@ -105,9 +105,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog LICENSE README.md
 %attr(755,root,root) %{_libdir}/libmbedcrypto.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedcrypto.so.0
+%attr(755,root,root) %ghost %{_libdir}/libmbedcrypto.so.3
 %attr(755,root,root) %{_libdir}/libmbedtls.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.10
+%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.12
 %attr(755,root,root) %{_libdir}/libmbedx509.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmbedx509.so.0
 %dir %{_libdir}/%{name}
@@ -137,6 +137,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/pk_encrypt
 %attr(755,root,root) %{_libdir}/%{name}/pk_sign
 %attr(755,root,root) %{_libdir}/%{name}/pk_verify
+%attr(755,root,root) %{_libdir}/%{name}/query_compile_time_config
 %attr(755,root,root) %{_libdir}/%{name}/req_app
 %attr(755,root,root) %{_libdir}/%{name}/rsa_decrypt
 %attr(755,root,root) %{_libdir}/%{name}/rsa_encrypt
