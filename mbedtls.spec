@@ -5,15 +5,17 @@
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		mbedtls
-Version:	2.16.6
+Version:	2.16.10
 Release:	1
 License:	GPL v2+
 Group:		Libraries
-Source0:	https://tls.mbed.org/code/releases/%{name}-%{version}-gpl.tgz
-# Source0-md5:	4ba3d1a090159486394ba6e46f95bf6c
-URL:		https://tls.mbed.org/
+#Source0Download: https://github.com/ARMmbed/mbedtls/releases
+Source0:	https://github.com/ARMmbed/mbedtls/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	35c8002be7088cb9cedb28e9917d7b24
+URL:		https://www.trustedfirmware.org/projects/mbed-tls/
 BuildRequires:	cmake >= 2.6
 BuildRequires:	doxygen
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.605
 %{?with_zlib:BuildRequires:	zlib-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -60,6 +62,7 @@ Statyczna biblioteka mbedTLS.
 Summary:	API documentation for mbedTLS library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki mbedTLS
 Group:		Documentation
+BuildArch:	noarch
 
 %description apidocs
 API documentation for mbedTLS library.
@@ -151,6 +154,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/ssl_mail_client
 %attr(755,root,root) %{_libdir}/%{name}/ssl_pthread_server
 %attr(755,root,root) %{_libdir}/%{name}/ssl_server
+%attr(755,root,root) %{_libdir}/%{name}/ssl_server2
 %attr(755,root,root) %{_libdir}/%{name}/strerror
 %attr(755,root,root) %{_libdir}/%{name}/udp_proxy
 
