@@ -5,20 +5,23 @@
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		mbedtls
-Version:	2.16.10
+Version:	2.26.0
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/ARMmbed/mbedtls/releases
 Source0:	https://github.com/ARMmbed/mbedtls/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	35c8002be7088cb9cedb28e9917d7b24
+# Source0-md5:	5f66a6278d469b1cca5e035786ae9ea8
 URL:		https://www.trustedfirmware.org/projects/mbed-tls/
-BuildRequires:	cmake >= 2.6
+BuildRequires:	cmake >= 2.8.12
 BuildRequires:	doxygen
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.605
 %{?with_zlib:BuildRequires:	zlib-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# some false positives(?)
+%define		specflags -Wno-error=format-truncation
 
 %description
 mbedTLS is a light-weight open source cryptographic and SSL/TLS
@@ -108,11 +111,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog LICENSE README.md
 %attr(755,root,root) %{_libdir}/libmbedcrypto.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedcrypto.so.3
+%attr(755,root,root) %ghost %{_libdir}/libmbedcrypto.so.6
 %attr(755,root,root) %{_libdir}/libmbedtls.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.12
+%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.13
 %attr(755,root,root) %{_libdir}/libmbedx509.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedx509.so.0
+%attr(755,root,root) %ghost %{_libdir}/libmbedx509.so.1
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/aescrypt2
 %attr(755,root,root) %{_libdir}/%{name}/benchmark
@@ -121,11 +124,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/cert_write
 %attr(755,root,root) %{_libdir}/%{name}/crl_app
 %attr(755,root,root) %{_libdir}/%{name}/crypt_and_hash
+%attr(755,root,root) %{_libdir}/%{name}/crypto_examples
 %attr(755,root,root) %{_libdir}/%{name}/dh_client
 %attr(755,root,root) %{_libdir}/%{name}/dh_genprime
 %attr(755,root,root) %{_libdir}/%{name}/dh_server
 %attr(755,root,root) %{_libdir}/%{name}/dtls_client
 %attr(755,root,root) %{_libdir}/%{name}/dtls_server
+%attr(755,root,root) %{_libdir}/%{name}/ecdh_curve25519
+%attr(755,root,root) %{_libdir}/%{name}/ecdsa
 %attr(755,root,root) %{_libdir}/%{name}/gen_entropy
 %attr(755,root,root) %{_libdir}/%{name}/gen_key
 %attr(755,root,root) %{_libdir}/%{name}/gen_random_ctr_drbg
@@ -133,6 +139,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/generic_sum
 %attr(755,root,root) %{_libdir}/%{name}/hello
 %attr(755,root,root) %{_libdir}/%{name}/key_app
+%attr(755,root,root) %{_libdir}/%{name}/key_app_writer
+%attr(755,root,root) %{_libdir}/%{name}/key_ladder_demo
+%attr(755,root,root) %{_libdir}/%{name}/key_ladder_demo.sh
 %attr(755,root,root) %{_libdir}/%{name}/mini_client
 %attr(755,root,root) %{_libdir}/%{name}/mpi_demo
 %attr(755,root,root) %{_libdir}/%{name}/pem2der
@@ -140,16 +149,20 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/pk_encrypt
 %attr(755,root,root) %{_libdir}/%{name}/pk_sign
 %attr(755,root,root) %{_libdir}/%{name}/pk_verify
+%attr(755,root,root) %{_libdir}/%{name}/psa_constant_names
 %attr(755,root,root) %{_libdir}/%{name}/query_compile_time_config
 %attr(755,root,root) %{_libdir}/%{name}/req_app
 %attr(755,root,root) %{_libdir}/%{name}/rsa_decrypt
 %attr(755,root,root) %{_libdir}/%{name}/rsa_encrypt
 %attr(755,root,root) %{_libdir}/%{name}/rsa_genkey
 %attr(755,root,root) %{_libdir}/%{name}/rsa_sign
+%attr(755,root,root) %{_libdir}/%{name}/rsa_sign_pss
 %attr(755,root,root) %{_libdir}/%{name}/rsa_verify
+%attr(755,root,root) %{_libdir}/%{name}/rsa_verify_pss
 %attr(755,root,root) %{_libdir}/%{name}/selftest
 %attr(755,root,root) %{_libdir}/%{name}/ssl_client1
 %attr(755,root,root) %{_libdir}/%{name}/ssl_client2
+%attr(755,root,root) %{_libdir}/%{name}/ssl_context_info
 %attr(755,root,root) %{_libdir}/%{name}/ssl_fork_server
 %attr(755,root,root) %{_libdir}/%{name}/ssl_mail_client
 %attr(755,root,root) %{_libdir}/%{name}/ssl_pthread_server
@@ -157,6 +170,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/ssl_server2
 %attr(755,root,root) %{_libdir}/%{name}/strerror
 %attr(755,root,root) %{_libdir}/%{name}/udp_proxy
+%attr(755,root,root) %{_libdir}/%{name}/zeroize
 
 %files devel
 %defattr(644,root,root,755)
@@ -164,6 +178,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmbedtls.so
 %attr(755,root,root) %{_libdir}/libmbedx509.so
 %{_includedir}/mbedtls
+%{_includedir}/psa
 
 %files static
 %defattr(644,root,root,755)
