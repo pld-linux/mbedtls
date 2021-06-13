@@ -20,8 +20,9 @@ BuildRequires:	rpmbuild(macros) >= 1.605
 %{?with_zlib:BuildRequires:	zlib-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-# some false positives(?)
-%define		specflags -Wno-error=format-truncation
+# some false positives for format-truncation(?)
+# for stringop-overflow see library/ssl_tls.c /stringop-overflow (workaround no longer works with gcc 11)
+%define		specflags -Wno-error=format-truncation -Wno-error=stringop-overflow
 
 %description
 mbedTLS is a light-weight open source cryptographic and SSL/TLS
