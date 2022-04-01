@@ -1,6 +1,6 @@
---- mbedtls-2.26.0/include/mbedtls/config.h.orig	2021-03-12 17:55:26.000000000 +0100
-+++ mbedtls-2.26.0/include/mbedtls/config.h	2021-06-13 22:49:25.354694754 +0200
-@@ -1907,7 +1907,7 @@
+--- mbedtls-3.1.0/./include/mbedtls/mbedtls_config.h~	2021-12-15 14:48:01.000000000 +0100
++++ mbedtls-3.1.0/./include/mbedtls/mbedtls_config.h	2022-04-01 19:24:00.006517078 +0200
+@@ -1607,7 +1607,7 @@
   *
   * Uncomment this to enable support for use_srtp extension.
   */
