@@ -86,7 +86,8 @@ cd build
 %cmake .. \
 	-DLIB_INSTALL_DIR:PATH=%{_libdir} \
 	%{?with_zlib:-DENABLE_ZLIB_SUPPORT=ON} \
-	-DUSE_SHARED_MBEDTLS_LIBRARY=ON
+	-DUSE_SHARED_MBEDTLS_LIBRARY=ON \
+	-DGEN_FILES=OFF
 
 %{__make}
 %{__make} apidoc
