@@ -6,7 +6,7 @@ Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		mbedtls
 Version:	3.1.0
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/ARMmbed/mbedtls/releases
@@ -101,10 +101,13 @@ ctest --output-on-failure
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} -C build install \
+	CMAKE_INSTALL_PREFIX=%{_libdir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_libdir}
-mv $RPM_BUILD_ROOT%{_bindir} $RPM_BUILD_ROOT%{_libdir}/%{name}
+%{__mv} $RPM_BUILD_ROOT%{_bindir} $RPM_BUILD_ROOT%{_libdir}/%{name}
+
+%{__mv} $RPM_BUILD_ROOT{%{_prefix},%{_libdir}}/cmake
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -183,7 +186,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmbedx509.so
 %{_includedir}/mbedtls
 %{_includedir}/psa
-%{_prefix}/cmake/MbedTLS*.cmake
+%{_libdir}/cmake/MbedTLS*.cmake
 
 %files static
 %defattr(644,root,root,755)
