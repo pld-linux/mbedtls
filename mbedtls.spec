@@ -2,17 +2,19 @@
 # Conditional build:
 %bcond_with	zlib	# zlib compression support (may reduce security, see CRIME)
 #
+%define		sname	mbedtls
+#
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
-Name:		mbedtls
+Name:		%{sname}2
 Version:	2.26.0
-Release:	2
+Release:	1
 License:	GPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/ARMmbed/mbedtls/releases
-Source0:	https://github.com/ARMmbed/mbedtls/archive/v%{version}/%{name}-%{version}.tar.gz
+Source0:	https://github.com/ARMmbed/mbedtls/archive/v%{version}/%{sname}-%{version}.tar.gz
 # Source0-md5:	5f66a6278d469b1cca5e035786ae9ea8
-Patch0:		%{name}-config-dtls-srtp.patch
+Patch0:		%{sname}-config-dtls-srtp.patch
 URL:		https://www.trustedfirmware.org/projects/mbed-tls/
 BuildRequires:	cmake >= 2.8.12
 BuildRequires:	doxygen
@@ -43,6 +45,7 @@ Summary:	Development files for mbedTLS
 Summary(pl.UTF-8):	Pliki programistyczne biblioteki mbedTLS
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Conflicts:	%{sname}-devel
 
 %description devel
 This package contains the header files for developing applications
@@ -57,6 +60,7 @@ Summary:	Static mbedTLS library
 Summary(pl.UTF-8):	Statyczna biblioteka mbedTLS
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Conflicts:	%{sname}-static
 
 %description static
 Static mbedTLS library.
@@ -77,7 +81,7 @@ API documentation for mbedTLS library.
 Dokumentacja API biblioteki mbedTLS.
 
 %prep
-%setup -q
+%setup -q -n %{sname}-%{version}
 %patch0 -p1
 
 %build
