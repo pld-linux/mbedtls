@@ -1,24 +1,19 @@
-#
-# Conditional build:
-%bcond_with	zlib	# zlib compression support (may reduce security, see CRIME)
-#
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		mbedtls
-Version:	3.1.0
-Release:	2
+Version:	3.4.0
+Release:	1
 License:	GPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/ARMmbed/mbedtls/releases
 Source0:	https://github.com/ARMmbed/mbedtls/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	a228170fbedd1202edcc1bf13d83b1a3
+# Source0-md5:	3f6c2eadc1243e9895d65c67b46eb890
 Patch0:		%{name}-config-dtls-srtp.patch
 URL:		https://www.trustedfirmware.org/projects/mbed-tls/
-BuildRequires:	cmake >= 2.8.12
+BuildRequires:	cmake >= 3.5.1
 BuildRequires:	doxygen
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.605
-%{?with_zlib:BuildRequires:	zlib-devel}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # some false positives for format-truncation(?)
@@ -85,7 +80,6 @@ install -d build
 cd build
 %cmake .. \
 	-DLIB_INSTALL_DIR:PATH=%{_libdir} \
-	%{?with_zlib:-DENABLE_ZLIB_SUPPORT=ON} \
 	-DUSE_SHARED_MBEDTLS_LIBRARY=ON \
 	-DGEN_FILES=OFF
 
@@ -107,8 +101,6 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libdir}
 %{__mv} $RPM_BUILD_ROOT%{_bindir} $RPM_BUILD_ROOT%{_libdir}/%{name}
 
-%{__mv} $RPM_BUILD_ROOT{%{_prefix},%{_libdir}}/cmake
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -119,16 +111,18 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog LICENSE README.md
 %attr(755,root,root) %{_libdir}/libmbedcrypto.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedcrypto.so.11
+%attr(755,root,root) %ghost %{_libdir}/libmbedcrypto.so.14
 %attr(755,root,root) %{_libdir}/libmbedtls.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.17
+%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.19
 %attr(755,root,root) %{_libdir}/libmbedx509.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedx509.so.4
+%attr(755,root,root) %ghost %{_libdir}/libmbedx509.so.5
 %dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/aead_demo
 %attr(755,root,root) %{_libdir}/%{name}/benchmark
 %attr(755,root,root) %{_libdir}/%{name}/cert_app
 %attr(755,root,root) %{_libdir}/%{name}/cert_req
 %attr(755,root,root) %{_libdir}/%{name}/cert_write
+%attr(755,root,root) %{_libdir}/%{name}/cipher_aead_demo
 %attr(755,root,root) %{_libdir}/%{name}/crl_app
 %attr(755,root,root) %{_libdir}/%{name}/crypt_and_hash
 %attr(755,root,root) %{_libdir}/%{name}/crypto_examples
@@ -144,11 +138,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/gen_random_ctr_drbg
 %attr(755,root,root) %{_libdir}/%{name}/generic_sum
 %attr(755,root,root) %{_libdir}/%{name}/hello
+%attr(755,root,root) %{_libdir}/%{name}/hmac_demo
 %attr(755,root,root) %{_libdir}/%{name}/key_app
 %attr(755,root,root) %{_libdir}/%{name}/key_app_writer
 %attr(755,root,root) %{_libdir}/%{name}/key_ladder_demo
 %attr(755,root,root) %{_libdir}/%{name}/key_ladder_demo.sh
 %attr(755,root,root) %{_libdir}/%{name}/load_roots
+%attr(755,root,root) %{_libdir}/%{name}/md_hmac_demo
 %attr(755,root,root) %{_libdir}/%{name}/mini_client
 %attr(755,root,root) %{_libdir}/%{name}/mpi_demo
 %attr(755,root,root) %{_libdir}/%{name}/pem2der
@@ -158,6 +154,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/pk_verify
 %attr(755,root,root) %{_libdir}/%{name}/psa_constant_names
 %attr(755,root,root) %{_libdir}/%{name}/query_compile_time_config
+%attr(755,root,root) %{_libdir}/%{name}/query_included_headers
 %attr(755,root,root) %{_libdir}/%{name}/req_app
 %attr(755,root,root) %{_libdir}/%{name}/rsa_decrypt
 %attr(755,root,root) %{_libdir}/%{name}/rsa_encrypt
@@ -186,7 +183,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmbedx509.so
 %{_includedir}/mbedtls
 %{_includedir}/psa
-%{_libdir}/cmake/MbedTLS*.cmake
+%{_libdir}/cmake/MbedTLS
 
 %files static
 %defattr(644,root,root,755)
@@ -196,4 +193,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files apidocs
 %defattr(644,root,root,755)
-%doc apidoc/*
+%doc apidoc/{search,*.css,*.html,*.js,*.png}
