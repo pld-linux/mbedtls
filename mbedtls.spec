@@ -98,8 +98,8 @@ rm -rf $RPM_BUILD_ROOT
 	CMAKE_INSTALL_PREFIX=%{_libdir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_libdir}
-%{__mv} $RPM_BUILD_ROOT%{_bindir} $RPM_BUILD_ROOT%{_libdir}/%{name}
+install -d $RPM_BUILD_ROOT%{_libexecdir}
+%{__mv} $RPM_BUILD_ROOT%{_bindir} $RPM_BUILD_ROOT%{_libexecdir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -116,65 +116,65 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.19
 %attr(755,root,root) %{_libdir}/libmbedx509.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmbedx509.so.5
-%dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/aead_demo
-%attr(755,root,root) %{_libdir}/%{name}/benchmark
-%attr(755,root,root) %{_libdir}/%{name}/cert_app
-%attr(755,root,root) %{_libdir}/%{name}/cert_req
-%attr(755,root,root) %{_libdir}/%{name}/cert_write
-%attr(755,root,root) %{_libdir}/%{name}/cipher_aead_demo
-%attr(755,root,root) %{_libdir}/%{name}/crl_app
-%attr(755,root,root) %{_libdir}/%{name}/crypt_and_hash
-%attr(755,root,root) %{_libdir}/%{name}/crypto_examples
-%attr(755,root,root) %{_libdir}/%{name}/dh_client
-%attr(755,root,root) %{_libdir}/%{name}/dh_genprime
-%attr(755,root,root) %{_libdir}/%{name}/dh_server
-%attr(755,root,root) %{_libdir}/%{name}/dtls_client
-%attr(755,root,root) %{_libdir}/%{name}/dtls_server
-%attr(755,root,root) %{_libdir}/%{name}/ecdh_curve25519
-%attr(755,root,root) %{_libdir}/%{name}/ecdsa
-%attr(755,root,root) %{_libdir}/%{name}/gen_entropy
-%attr(755,root,root) %{_libdir}/%{name}/gen_key
-%attr(755,root,root) %{_libdir}/%{name}/gen_random_ctr_drbg
-%attr(755,root,root) %{_libdir}/%{name}/generic_sum
-%attr(755,root,root) %{_libdir}/%{name}/hello
-%attr(755,root,root) %{_libdir}/%{name}/hmac_demo
-%attr(755,root,root) %{_libdir}/%{name}/key_app
-%attr(755,root,root) %{_libdir}/%{name}/key_app_writer
-%attr(755,root,root) %{_libdir}/%{name}/key_ladder_demo
-%attr(755,root,root) %{_libdir}/%{name}/key_ladder_demo.sh
-%attr(755,root,root) %{_libdir}/%{name}/load_roots
-%attr(755,root,root) %{_libdir}/%{name}/md_hmac_demo
-%attr(755,root,root) %{_libdir}/%{name}/mini_client
-%attr(755,root,root) %{_libdir}/%{name}/mpi_demo
-%attr(755,root,root) %{_libdir}/%{name}/pem2der
-%attr(755,root,root) %{_libdir}/%{name}/pk_decrypt
-%attr(755,root,root) %{_libdir}/%{name}/pk_encrypt
-%attr(755,root,root) %{_libdir}/%{name}/pk_sign
-%attr(755,root,root) %{_libdir}/%{name}/pk_verify
-%attr(755,root,root) %{_libdir}/%{name}/psa_constant_names
-%attr(755,root,root) %{_libdir}/%{name}/query_compile_time_config
-%attr(755,root,root) %{_libdir}/%{name}/query_included_headers
-%attr(755,root,root) %{_libdir}/%{name}/req_app
-%attr(755,root,root) %{_libdir}/%{name}/rsa_decrypt
-%attr(755,root,root) %{_libdir}/%{name}/rsa_encrypt
-%attr(755,root,root) %{_libdir}/%{name}/rsa_genkey
-%attr(755,root,root) %{_libdir}/%{name}/rsa_sign
-%attr(755,root,root) %{_libdir}/%{name}/rsa_sign_pss
-%attr(755,root,root) %{_libdir}/%{name}/rsa_verify
-%attr(755,root,root) %{_libdir}/%{name}/rsa_verify_pss
-%attr(755,root,root) %{_libdir}/%{name}/selftest
-%attr(755,root,root) %{_libdir}/%{name}/ssl_client1
-%attr(755,root,root) %{_libdir}/%{name}/ssl_client2
-%attr(755,root,root) %{_libdir}/%{name}/ssl_context_info
-%attr(755,root,root) %{_libdir}/%{name}/ssl_fork_server
-%attr(755,root,root) %{_libdir}/%{name}/ssl_mail_client
-%attr(755,root,root) %{_libdir}/%{name}/ssl_pthread_server
-%attr(755,root,root) %{_libdir}/%{name}/ssl_server
-%attr(755,root,root) %{_libdir}/%{name}/ssl_server2
-%attr(755,root,root) %{_libdir}/%{name}/strerror
-%attr(755,root,root) %{_libdir}/%{name}/udp_proxy
-%attr(755,root,root) %{_libdir}/%{name}/zeroize
+%dir %{_libexecdir}/%{name}
+%attr(755,root,root) %{_libexecdir}/%{name}/aead_demo
+%attr(755,root,root) %{_libexecdir}/%{name}/benchmark
+%attr(755,root,root) %{_libexecdir}/%{name}/cert_app
+%attr(755,root,root) %{_libexecdir}/%{name}/cert_req
+%attr(755,root,root) %{_libexecdir}/%{name}/cert_write
+%attr(755,root,root) %{_libexecdir}/%{name}/cipher_aead_demo
+%attr(755,root,root) %{_libexecdir}/%{name}/crl_app
+%attr(755,root,root) %{_libexecdir}/%{name}/crypt_and_hash
+%attr(755,root,root) %{_libexecdir}/%{name}/crypto_examples
+%attr(755,root,root) %{_libexecdir}/%{name}/dh_client
+%attr(755,root,root) %{_libexecdir}/%{name}/dh_genprime
+%attr(755,root,root) %{_libexecdir}/%{name}/dh_server
+%attr(755,root,root) %{_libexecdir}/%{name}/dtls_client
+%attr(755,root,root) %{_libexecdir}/%{name}/dtls_server
+%attr(755,root,root) %{_libexecdir}/%{name}/ecdh_curve25519
+%attr(755,root,root) %{_libexecdir}/%{name}/ecdsa
+%attr(755,root,root) %{_libexecdir}/%{name}/gen_entropy
+%attr(755,root,root) %{_libexecdir}/%{name}/gen_key
+%attr(755,root,root) %{_libexecdir}/%{name}/gen_random_ctr_drbg
+%attr(755,root,root) %{_libexecdir}/%{name}/generic_sum
+%attr(755,root,root) %{_libexecdir}/%{name}/hello
+%attr(755,root,root) %{_libexecdir}/%{name}/hmac_demo
+%attr(755,root,root) %{_libexecdir}/%{name}/key_app
+%attr(755,root,root) %{_libexecdir}/%{name}/key_app_writer
+%attr(755,root,root) %{_libexecdir}/%{name}/key_ladder_demo
+%attr(755,root,root) %{_libexecdir}/%{name}/key_ladder_demo.sh
+%attr(755,root,root) %{_libexecdir}/%{name}/load_roots
+%attr(755,root,root) %{_libexecdir}/%{name}/md_hmac_demo
+%attr(755,root,root) %{_libexecdir}/%{name}/mini_client
+%attr(755,root,root) %{_libexecdir}/%{name}/mpi_demo
+%attr(755,root,root) %{_libexecdir}/%{name}/pem2der
+%attr(755,root,root) %{_libexecdir}/%{name}/pk_decrypt
+%attr(755,root,root) %{_libexecdir}/%{name}/pk_encrypt
+%attr(755,root,root) %{_libexecdir}/%{name}/pk_sign
+%attr(755,root,root) %{_libexecdir}/%{name}/pk_verify
+%attr(755,root,root) %{_libexecdir}/%{name}/psa_constant_names
+%attr(755,root,root) %{_libexecdir}/%{name}/query_compile_time_config
+%attr(755,root,root) %{_libexecdir}/%{name}/query_included_headers
+%attr(755,root,root) %{_libexecdir}/%{name}/req_app
+%attr(755,root,root) %{_libexecdir}/%{name}/rsa_decrypt
+%attr(755,root,root) %{_libexecdir}/%{name}/rsa_encrypt
+%attr(755,root,root) %{_libexecdir}/%{name}/rsa_genkey
+%attr(755,root,root) %{_libexecdir}/%{name}/rsa_sign
+%attr(755,root,root) %{_libexecdir}/%{name}/rsa_sign_pss
+%attr(755,root,root) %{_libexecdir}/%{name}/rsa_verify
+%attr(755,root,root) %{_libexecdir}/%{name}/rsa_verify_pss
+%attr(755,root,root) %{_libexecdir}/%{name}/selftest
+%attr(755,root,root) %{_libexecdir}/%{name}/ssl_client1
+%attr(755,root,root) %{_libexecdir}/%{name}/ssl_client2
+%attr(755,root,root) %{_libexecdir}/%{name}/ssl_context_info
+%attr(755,root,root) %{_libexecdir}/%{name}/ssl_fork_server
+%attr(755,root,root) %{_libexecdir}/%{name}/ssl_mail_client
+%attr(755,root,root) %{_libexecdir}/%{name}/ssl_pthread_server
+%attr(755,root,root) %{_libexecdir}/%{name}/ssl_server
+%attr(755,root,root) %{_libexecdir}/%{name}/ssl_server2
+%attr(755,root,root) %{_libexecdir}/%{name}/strerror
+%attr(755,root,root) %{_libexecdir}/%{name}/udp_proxy
+%attr(755,root,root) %{_libexecdir}/%{name}/zeroize
 
 %files devel
 %defattr(644,root,root,755)
