@@ -7,13 +7,13 @@
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		%{sname}2
-Version:	2.26.0
+Version:	2.28.3
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/ARMmbed/mbedtls/releases
 Source0:	https://github.com/ARMmbed/mbedtls/archive/v%{version}/%{sname}-%{version}.tar.gz
-# Source0-md5:	5f66a6278d469b1cca5e035786ae9ea8
+# Source0-md5:	7e1b09243447a0378a78dd5469b68415
 Patch0:		%{sname}-config-dtls-srtp.patch
 URL:		https://www.trustedfirmware.org/projects/mbed-tls/
 BuildRequires:	cmake >= 2.8.12
@@ -119,13 +119,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog LICENSE README.md
 %attr(755,root,root) %{_libdir}/libmbedcrypto.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedcrypto.so.6
+%attr(755,root,root) %ghost %{_libdir}/libmbedcrypto.so.7
 %attr(755,root,root) %{_libdir}/libmbedtls.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.13
+%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.14
 %attr(755,root,root) %{_libdir}/libmbedx509.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmbedx509.so.1
 %dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/aescrypt2
 %attr(755,root,root) %{_libdir}/%{name}/benchmark
 %attr(755,root,root) %{_libdir}/%{name}/cert_app
 %attr(755,root,root) %{_libdir}/%{name}/cert_req
@@ -150,6 +149,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/key_app_writer
 %attr(755,root,root) %{_libdir}/%{name}/key_ladder_demo
 %attr(755,root,root) %{_libdir}/%{name}/key_ladder_demo.sh
+%attr(755,root,root) %{_libdir}/%{name}/load_roots
 %attr(755,root,root) %{_libdir}/%{name}/mini_client
 %attr(755,root,root) %{_libdir}/%{name}/mpi_demo
 %attr(755,root,root) %{_libdir}/%{name}/pem2der
