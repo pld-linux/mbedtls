@@ -1,13 +1,17 @@
+#
+# Conditional build:
+%bcond_with	x86aes	# (32-bit) x86 pclmul+sse2+aes instruction sets
+
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		mbedtls
-Version:	3.4.1
+Version:	3.5.2
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/Mbed-TLS/mbedtls/releases
 Source0:	https://github.com/Mbed-TLS/mbedtls/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	fe5a8f53ace5aec5440a78ea07c872f1
+# Source0-md5:	65fccd1e2f0aa0aa544e35c626075785
 Patch0:		%{name}-config-dtls-srtp.patch
 URL:		https://www.trustedfirmware.org/projects/mbed-tls/
 BuildRequires:	cmake >= 3.5.1
@@ -76,6 +80,16 @@ Dokumentacja API biblioteki mbedTLS.
 %patch -P0 -p1
 
 %build
+%ifarch %{ix86}
+%if %{with x86aes}
+# mbedtls 3.5.[0-2] on 32-bit x86 requires aes.c and aesni.c built with AES+SSE2 options
+# but aes.c code is executed regardless of CPU features detection
+CFLAGS="%{rpmcflags} -mpclmul -msse2 -maes"
+%else
+%{__sed} -i -e 's,^#define MBEDTLS_AESNI_C,// &,' include/mbedtls/mbedtls_config.h
+%endif
+%endif
+
 install -d build
 cd build
 %cmake .. \
@@ -111,11 +125,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog LICENSE README.md
 %attr(755,root,root) %{_libdir}/libmbedcrypto.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedcrypto.so.14
+%attr(755,root,root) %ghost %{_libdir}/libmbedcrypto.so.15
 %attr(755,root,root) %{_libdir}/libmbedtls.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.19
+%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.20
 %attr(755,root,root) %{_libdir}/libmbedx509.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedx509.so.5
+%attr(755,root,root) %ghost %{_libdir}/libmbedx509.so.6
+%attr(755,root,root) %{_libdir}/libeverest.so
+%attr(755,root,root) %{_libdir}/libp256m.so
 %dir %{_libexecdir}/%{name}
 %attr(755,root,root) %{_libexecdir}/%{name}/aead_demo
 %attr(755,root,root) %{_libexecdir}/%{name}/benchmark
@@ -181,6 +197,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmbedcrypto.so
 %attr(755,root,root) %{_libdir}/libmbedtls.so
 %attr(755,root,root) %{_libdir}/libmbedx509.so
+%{_includedir}/everest
 %{_includedir}/mbedtls
 %{_includedir}/psa
 %{_libdir}/cmake/MbedTLS
