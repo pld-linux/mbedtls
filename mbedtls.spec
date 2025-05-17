@@ -82,7 +82,7 @@ Dokumentacja API biblioteki mbedTLS.
 
 %prep
 %setup -q -n %{sname}-%{version}
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 install -d build
