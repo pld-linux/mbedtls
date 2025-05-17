@@ -1,13 +1,13 @@
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		mbedtls
-Version:	3.4.0
+Version:	3.4.1
 Release:	1
 License:	GPL v2+
 Group:		Libraries
-#Source0Download: https://github.com/ARMmbed/mbedtls/releases
-Source0:	https://github.com/ARMmbed/mbedtls/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	3f6c2eadc1243e9895d65c67b46eb890
+#Source0Download: https://github.com/Mbed-TLS/mbedtls/releases
+Source0:	https://github.com/Mbed-TLS/mbedtls/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	fe5a8f53ace5aec5440a78ea07c872f1
 Patch0:		%{name}-config-dtls-srtp.patch
 URL:		https://www.trustedfirmware.org/projects/mbed-tls/
 BuildRequires:	cmake >= 3.5.1
