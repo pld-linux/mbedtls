@@ -1,23 +1,31 @@
 #
 # Conditional build:
-%bcond_with	x86aes	# (32-bit) x86 pclmul+sse2+aes instruction sets
+%bcond_with	x86aes	# x86-32 pclmul+sse2+aes instruction sets
 
+%ifnarch %{ix86}
+%undefine	with_x86aes
+%endif
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		mbedtls
-Version:	3.5.2
+Version:	3.6.3.1
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/Mbed-TLS/mbedtls/releases
 Source0:	https://github.com/Mbed-TLS/mbedtls/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	65fccd1e2f0aa0aa544e35c626075785
+# Source0-md5:	ca72e14669a8fddc7d1bf154947ebd4c
 Patch0:		%{name}-config-dtls-srtp.patch
 URL:		https://www.trustedfirmware.org/projects/mbed-tls/
 BuildRequires:	cmake >= 3.5.1
 BuildRequires:	doxygen
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.605
+%if %{with x86aes}
+Requires:	cpuinfo(aes)
+Requires:	cpuinfo(pclmulqdq)
+Requires:	cpuinfo(sse2)
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # some false positives for format-truncation(?)
@@ -80,14 +88,11 @@ Dokumentacja API biblioteki mbedTLS.
 %patch -P0 -p1
 
 %build
-%ifarch %{ix86}
 %if %{with x86aes}
-# mbedtls 3.5.[0-2] on 32-bit x86 requires aes.c and aesni.c built with AES+SSE2 options
+# in mbedtls 3.5/3.6 on 32-bit x86, hardware AESNI requires aes.c and aesni.c
+# built with AES+SSE2 options
 # but aes.c code is executed regardless of CPU features detection
 CFLAGS="%{rpmcflags} -mpclmul -msse2 -maes"
-%else
-%{__sed} -i -e 's,^#define MBEDTLS_AESNI_C,// &,' include/mbedtls/mbedtls_config.h
-%endif
 %endif
 
 install -d build
@@ -125,11 +130,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc ChangeLog LICENSE README.md
 %attr(755,root,root) %{_libdir}/libmbedcrypto.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedcrypto.so.15
+%attr(755,root,root) %ghost %{_libdir}/libmbedcrypto.so.16
 %attr(755,root,root) %{_libdir}/libmbedtls.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.20
+%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.21
 %attr(755,root,root) %{_libdir}/libmbedx509.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedx509.so.6
+%attr(755,root,root) %ghost %{_libdir}/libmbedx509.so.7
 %attr(755,root,root) %{_libdir}/libeverest.so
 %attr(755,root,root) %{_libdir}/libp256m.so
 %dir %{_libexecdir}/%{name}
@@ -161,6 +166,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/%{name}/key_ladder_demo.sh
 %attr(755,root,root) %{_libexecdir}/%{name}/load_roots
 %attr(755,root,root) %{_libexecdir}/%{name}/md_hmac_demo
+%attr(755,root,root) %{_libexecdir}/%{name}/metatest
 %attr(755,root,root) %{_libexecdir}/%{name}/mini_client
 %attr(755,root,root) %{_libexecdir}/%{name}/mpi_demo
 %attr(755,root,root) %{_libexecdir}/%{name}/pem2der
@@ -169,6 +175,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/%{name}/pk_sign
 %attr(755,root,root) %{_libexecdir}/%{name}/pk_verify
 %attr(755,root,root) %{_libexecdir}/%{name}/psa_constant_names
+%attr(755,root,root) %{_libexecdir}/%{name}/psa_hash
 %attr(755,root,root) %{_libexecdir}/%{name}/query_compile_time_config
 %attr(755,root,root) %{_libexecdir}/%{name}/query_included_headers
 %attr(755,root,root) %{_libexecdir}/%{name}/req_app
@@ -201,6 +208,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/mbedtls
 %{_includedir}/psa
 %{_libdir}/cmake/MbedTLS
+%{_pkgconfigdir}/mbedcrypto.pc
+%{_pkgconfigdir}/mbedtls.pc
+%{_pkgconfigdir}/mbedx509.pc
 
 %files static
 %defattr(644,root,root,755)
