@@ -7,13 +7,13 @@
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		%{sname}2
-Version:	2.28.3
-Release:	2
+Version:	2.28.10
+Release:	1
 License:	GPL v2+
 Group:		Libraries
-#Source0Download: https://github.com/ARMmbed/mbedtls/releases
-Source0:	https://github.com/ARMmbed/mbedtls/archive/v%{version}/%{sname}-%{version}.tar.gz
-# Source0-md5:	7e1b09243447a0378a78dd5469b68415
+#Source0Download: https://github.com/Mbed-TLS/mbedtls/releases
+Source0:	https://github.com/Mbed-TLS/mbedtls/archive/v%{version}/%{sname}-%{version}.tar.gz
+# Source0-md5:	3da397a7311f39ec3d338818e215e537
 Patch0:		%{sname}-config-dtls-srtp.patch
 URL:		https://www.trustedfirmware.org/projects/mbed-tls/
 BuildRequires:	cmake >= 2.8.12
@@ -150,6 +150,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/%{name}/key_ladder_demo
 %attr(755,root,root) %{_libexecdir}/%{name}/key_ladder_demo.sh
 %attr(755,root,root) %{_libexecdir}/%{name}/load_roots
+%attr(755,root,root) %{_libexecdir}/%{name}/metatest
 %attr(755,root,root) %{_libexecdir}/%{name}/mini_client
 %attr(755,root,root) %{_libexecdir}/%{name}/mpi_demo
 %attr(755,root,root) %{_libexecdir}/%{name}/pem2der
@@ -185,8 +186,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmbedcrypto.so
 %attr(755,root,root) %{_libdir}/libmbedtls.so
 %attr(755,root,root) %{_libdir}/libmbedx509.so
+%{_includedir}/everest
 %{_includedir}/mbedtls
 %{_includedir}/psa
+%{_pkgconfigdir}/mbedcrypto.pc
+%{_pkgconfigdir}/mbedtls.pc
+%{_pkgconfigdir}/mbedx509.pc
 
 %files static
 %defattr(644,root,root,755)
