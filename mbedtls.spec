@@ -28,11 +28,6 @@ Requires:	cpuinfo(sse2)
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-# some false positives for format-truncation(?)
-# for stringop-overflow see library/ssl_tls.c /stringop-overflow (workaround no longer works with gcc 11)
-# maybe-uninitialized fails in tests/suites/test_suite_ssl.function only on i686 builder(???)
-%define		specflags -Wno-error=format-truncation -Wno-error=stringop-overflow -Wno-error=maybe-uninitialized
-
 %description
 mbedTLS is a light-weight open source cryptographic and SSL/TLS
 library written in C. mbedTLS makes it easy for developers to include
