@@ -8,13 +8,13 @@
 Summary:	Light-weight cryptographic and SSL/TLS library
 Summary(pl.UTF-8):	Lekka biblioteka kryptograficzna oraz SSL/TLS
 Name:		mbedtls
-Version:	3.6.4
+Version:	3.6.5
 Release:	1
 License:	GPL v2+
 Group:		Libraries
 #Source0Download: https://github.com/Mbed-TLS/mbedtls/releases
 Source0:	https://github.com/Mbed-TLS/mbedtls/releases/download/%{name}-%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	eb965a5bb8044bc43a49adb435fa72ee
+# Source0-md5:	bc79602daf85f1cf35a686b53056de58
 Patch0:		%{name}-config-dtls-srtp.patch
 URL:		https://www.trustedfirmware.org/projects/mbed-tls/
 BuildRequires:	cmake >= 3.5.1
@@ -124,14 +124,14 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc ChangeLog LICENSE README.md
-%attr(755,root,root) %{_libdir}/libmbedcrypto.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedcrypto.so.16
-%attr(755,root,root) %{_libdir}/libmbedtls.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedtls.so.21
-%attr(755,root,root) %{_libdir}/libmbedx509.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmbedx509.so.7
-%attr(755,root,root) %{_libdir}/libeverest.so
-%attr(755,root,root) %{_libdir}/libp256m.so
+%{_libdir}/libmbedcrypto.so.*.*.*
+%ghost %{_libdir}/libmbedcrypto.so.16
+%{_libdir}/libmbedtls.so.*.*.*
+%ghost %{_libdir}/libmbedtls.so.21
+%{_libdir}/libmbedx509.so.*.*.*
+%ghost %{_libdir}/libmbedx509.so.7
+%{_libdir}/libeverest.so
+%{_libdir}/libp256m.so
 %dir %{_libexecdir}/%{name}
 %attr(755,root,root) %{_libexecdir}/%{name}/aead_demo
 %attr(755,root,root) %{_libexecdir}/%{name}/benchmark
@@ -196,9 +196,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libmbedcrypto.so
-%attr(755,root,root) %{_libdir}/libmbedtls.so
-%attr(755,root,root) %{_libdir}/libmbedx509.so
+%{_libdir}/libmbedcrypto.so
+%{_libdir}/libmbedtls.so
+%{_libdir}/libmbedx509.so
 %{_includedir}/everest
 %{_includedir}/mbedtls
 %{_includedir}/psa
