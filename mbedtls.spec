@@ -1,6 +1,7 @@
 #
 # Conditional build:
-%bcond_with	x86aes	# x86-32 pclmul+sse2+aes instruction sets
+%bcond_with	x86aes		# x86-32 pclmul+sse2+aes instruction sets
+%bcond_without	static_libs	# static libraries
 
 %ifnarch %{ix86}
 %undefine	with_x86aes
@@ -20,7 +21,7 @@ URL:		https://www.trustedfirmware.org/projects/mbed-tls/
 BuildRequires:	cmake >= 3.5.1
 BuildRequires:	doxygen
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.605
+BuildRequires:	rpmbuild(macros) >= 2.047
 %if %{with x86aes}
 Requires:	cpuinfo(aes)
 Requires:	cpuinfo(pclmulqdq)
@@ -95,6 +96,7 @@ cd build
 %cmake .. \
 	-DLIB_INSTALL_DIR:PATH=%{_libdir} \
 	-DUSE_SHARED_MBEDTLS_LIBRARY=ON \
+	-DUSE_STATIC_MBEDTLS_LIBRARY=%{__ON_OFF static_libs} \
 	-DGEN_FILES=OFF
 
 %{__make}
@@ -207,11 +209,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/mbedtls.pc
 %{_pkgconfigdir}/mbedx509.pc
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libmbedcrypto.a
 %{_libdir}/libmbedtls.a
 %{_libdir}/libmbedx509.a
+%endif
 
 %files apidocs
 %defattr(644,root,root,755)
