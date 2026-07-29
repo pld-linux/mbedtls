@@ -46,7 +46,7 @@ przy jak najmniejszym narzucie.
 Summary:	Development files for mbedTLS
 Summary(pl.UTF-8):	Pliki programistyczne biblioteki mbedTLS
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 This package contains the header files for developing applications
@@ -60,7 +60,7 @@ wykorzystujących bibliotekę mbedTLS.
 Summary:	Static mbedTLS library
 Summary(pl.UTF-8):	Statyczna biblioteka mbedTLS
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
 
 %description static
 Static mbedTLS library.
