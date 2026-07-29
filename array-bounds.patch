@@ -1,0 +1,11 @@
+--- mbedtls-3.6.7/library/common.h.orig	2026-07-02 17:37:17.059929800 +0200
++++ mbedtls-3.6.7/library/common.h	2026-07-29 23:25:53.513309075 +0200
+@@ -332,7 +332,7 @@
+         uint32_t x = mbedtls_get_unaligned_uint32(a + i) ^ mbedtls_get_unaligned_uint32(b + i);
+         mbedtls_put_unaligned_uint32(r + i, x);
+     }
+-#if defined(__IAR_SYSTEMS_ICC__)
++#if defined(__IAR_SYSTEMS_ICC__) || defined(MBEDTLS_COMPILER_IS_GCC)
+     if (n % 4 == 0) {
+         return;
+     }
